@@ -27,6 +27,7 @@ io.on("connection", (socket) => {
 
   socket.on("disconnect", () => {
     socket.broadcast.emit("callEnded");
+    // console.log("disconnect, ", socket.id);
   });
 
   socket.on("callUser", ({ userToCall, signalData, from, name }) => {
