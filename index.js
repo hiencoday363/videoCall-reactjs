@@ -40,7 +40,6 @@ app.use(express.static(__dirname + "/build"));
 
 app.get("/", (req, res) => {
   res.sendFile(__dirname + "/build/index.html");
-  // res.sendFile(__dirname + "/clien-chat-video/build/index.html");
 });
 
 // api
@@ -84,6 +83,10 @@ server.listen(PORT);
 // socket.io
 var array_user = [];
 
+// app.get("/get/user", (req, res) => {
+//   res.json(array_user);
+// });
+
 io.on("connection", (socket) => {
   socket.on("user_connected", (data) => {
     let tuple = {
@@ -102,13 +105,18 @@ io.on("connection", (socket) => {
     }
 
     array_user.push(tuple);
-    // console.log("total users:", array_user);
+
+    io.emit("updateUser", array_user);
   });
 
   // socket.on("get_user", () => {
   //   console.log(array_user);
   // socket.emit("res_user", { users: array_user });
   // });
+
+  socket.on("endSession", () => {
+    socket.disconnect();
+  });
 
   socket.on("disconnect", () => {
     // remove element
@@ -118,6 +126,8 @@ io.on("connection", (socket) => {
         array_user.splice(id, 1);
       }
     });
+
+    io.emit("updateUser", array_user);
   });
 
   socket.on("callUser", (data) => {
