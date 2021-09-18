@@ -1,21 +1,38 @@
 {
   "files": {
-    "main.css": "/static/css/main.9d659346.chunk.css",
-    "main.js": "/static/js/main.86681d27.chunk.js",
-    "main.js.map": "/static/js/main.86681d27.chunk.js.map",
+    "main.css": "/static/css/main.68e6325c.chunk.css",
+    "main.js": "/static/js/main.b3480f70.chunk.js",
+    "main.js.map": "/static/js/main.b3480f70.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.7de639a9.js",
     "runtime-main.js.map": "/static/js/runtime-main.7de639a9.js.map",
-    "static/js/2.c01a6eca.chunk.js": "/static/js/2.c01a6eca.chunk.js",
-    "static/js/2.c01a6eca.chunk.js.map": "/static/js/2.c01a6eca.chunk.js.map",
+    "static/js/2.1b339bdc.chunk.js": "/static/js/2.1b339bdc.chunk.js",
+    "static/js/2.1b339bdc.chunk.js.map": "/static/js/2.1b339bdc.chunk.js.map",
     "index.html": "/index.html",
-    "static/css/main.9d659346.chunk.css.map": "/static/css/main.9d659346.chunk.css.map",
-    "static/js/2.c01a6eca.chunk.js.LICENSE.txt": "/static/js/2.c01a6eca.chunk.js.LICENSE.txt",
-    "static/media/alarmxperia.a4f557f6.mp3": "/static/media/alarmxperia.a4f557f6.mp3"
+    "static/css/main.68e6325c.chunk.css.map": "/static/css/main.68e6325c.chunk.css.map",
+    "static/js/2.1b339bdc.chunk.js.LICENSE.txt": "/static/js/2.1b339bdc.chunk.js.LICENSE.txt",
+    "static/media/alarmxperia.a4f557f6.mp3": "/static/media/alarmxperia.a4f557f6.mp3",
+    "static/media/amazon-clone.c830c36c.PNG": "/static/media/amazon-clone.c830c36c.PNG",
+    "static/media/clem-onojegaw.8809fc53.jpg": "/static/media/clem-onojegaw.8809fc53.jpg",
+    "static/media/clem-onojeghuo.862a0952.jpg": "/static/media/clem-onojeghuo.862a0952.jpg",
+    "static/media/cynthia-del-rio.43673965.jpg": "/static/media/cynthia-del-rio.43673965.jpg",
+    "static/media/home.css": "/static/media/home-bg.79621da9.jpg",
+    "static/media/img-django-web.f352dd62.PNG": "/static/media/img-django-web.f352dd62.PNG",
+    "static/media/img_flask_web.031d6981.PNG": "/static/media/img_flask_web.031d6981.PNG",
+    "static/media/img_nodejs_web.b87e836c.PNG": "/static/media/img_nodejs_web.b87e836c.PNG",
+    "static/media/img_php_web.f7bd5c10.png": "/static/media/img_php_web.f7bd5c10.png",
+    "static/media/mariya-georgieva.0817f394.jpg": "/static/media/mariya-georgieva.0817f394.jpg",
+    "static/media/me.0e52745b.jpg": "/static/media/me.0e52745b.jpg",
+    "static/media/olu-eletu.429cd6ef.jpg": "/static/media/olu-eletu.429cd6ef.jpg",
+    "static/media/studio-1.56c6121d.jpg": "/static/media/studio-1.56c6121d.jpg",
+    "static/media/studio-2.6fe3aba0.jpg": "/static/media/studio-2.6fe3aba0.jpg",
+    "static/media/studio-3.cb63e16b.jpg": "/static/media/studio-3.cb63e16b.jpg",
+    "static/media/studio-4.4c272c46.jpg": "/static/media/studio-4.4c272c46.jpg",
+    "static/media/studio-5.6b052d75.jpg": "/static/media/studio-5.6b052d75.jpg"
   },
   "entrypoints": [
     "static/js/runtime-main.7de639a9.js",
-    "static/js/2.c01a6eca.chunk.js",
-    "static/css/main.9d659346.chunk.css",
-    "static/js/main.86681d27.chunk.js"
+    "static/js/2.1b339bdc.chunk.js",
+    "static/css/main.68e6325c.chunk.css",
+    "static/js/main.b3480f70.chunk.js"
   ]
 }

@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
+const cookiesMiddleware = require("universal-cookie-express");
 
 const server = require("http").createServer(app);
 const cors = require("cors");
@@ -35,10 +36,12 @@ const account = [
 ];
 
 app.use(cors());
+app.use(cookiesMiddleware());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname + "/build"));
 
 app.get("/", (req, res) => {
+  // res.send("Run from index.js of server nodejs");
   res.sendFile(__dirname + "/build/index.html");
 });
 
@@ -81,6 +84,7 @@ app.post("/api/getFullAcc", (req, res) => {
 server.listen(PORT);
 
 // socket.io
+var array_user_chat = [];
 var array_user = [];
 
 // app.get("/get/user", (req, res) => {
@@ -88,6 +92,30 @@ var array_user = [];
 // });
 
 io.on("connection", (socket) => {
+  socket.on("user_connected_chat", (data) => {
+    let tuple = {
+      username: data["userLogIn"],
+      socket_id: socket.id,
+    };
+
+    io.emit("updateUser_chat", updateUser(array_user_chat, tuple));
+  });
+
+  socket.on("sendMess", (data) => {
+    let socketid = findSocketId(array_user_chat, data["to"]);
+    io.to(socketid["socket_id"]).emit("receiveMess", data);
+  });
+
+  socket.on("sendFile", (data) => {
+    let socketid = findSocketId(array_user_chat, data["to"]);
+    io.to(socketid["socket_id"]).emit("receiveFile", data);
+  });
+
+  socket.on("sendAudio", (data) => {
+    let socketid = findSocketId(array_user_chat, data["to"]);
+    io.to(socketid["socket_id"]).emit("receiveAudio", data);
+  });
+
   socket.on("user_connected", (data) => {
     let tuple = {
       username: data["userLogIn"],
@@ -95,18 +123,7 @@ io.on("connection", (socket) => {
       socket_id: socket.id,
     };
 
-    if (array_user.length > 0) {
-      array_user.forEach((element) => {
-        if (element["username"] == tuple["username"]) {
-          let id = array_user.indexOf(element);
-          array_user.splice(id, 1);
-        }
-      });
-    }
-
-    array_user.push(tuple);
-
-    io.emit("updateUser", array_user);
+    io.emit("updateUser", updateUser(array_user, tuple));
   });
 
   // socket.on("get_user", () => {
@@ -120,18 +137,15 @@ io.on("connection", (socket) => {
 
   socket.on("disconnect", () => {
     // remove element
-    array_user.forEach((element) => {
-      if (element["socket_id"] == socket.id) {
-        let id = array_user.indexOf(element);
-        array_user.splice(id, 1);
-      }
-    });
-
+    array_user = removeUser(array_user, socket.id);
     io.emit("updateUser", array_user);
+
+    array_user_chat = removeUser(array_user_chat, socket.id);
+    io.emit("updateUser_chat", array_user_chat);
   });
 
   socket.on("callUser", (data) => {
-    let socketid = findSocketId(data["to"]);
+    let socketid = findSocketId(array_user, data["to"]);
 
     if (socketid) {
       io.to(socketid["socket_id"]).emit("calling", data["from"]);
@@ -143,10 +157,10 @@ io.on("connection", (socket) => {
   });
 
   socket.on("answerCall", (data) => {
-    let socketid = findSocketId(data["to"]);
+    let socketid = findSocketId(array_user, data["to"]);
 
     if (data["accept"]) {
-      let socketIdFrom = findSocketId(data["from"]);
+      let socketIdFrom = findSocketId(array_user, data["from"]);
       io.to(socketid["socket_id"]).emit("callAccepted", {
         accept: data["accept"],
         peer_id: socketIdFrom["peer_id"],
@@ -159,12 +173,23 @@ io.on("connection", (socket) => {
   });
 
   socket.on("leaveCall", (data) => {
-    let socketid = findSocketId(data["to"]);
+    let socketid = findSocketId(array_user, data["to"]);
     io.to(socketid["socket_id"]).emit("endCall", { endCall: true });
   });
 });
 
-const findSocketId = (some) => {
+const removeUser = (array, socket_id) => {
+  array.forEach((element) => {
+    if (element["socket_id"] == socket_id) {
+      let id = array.indexOf(element);
+      array.splice(id, 1);
+    }
+  });
+
+  return array;
+};
+
+const findSocketId = (array_user, some) => {
   let socketid;
   array_user.forEach((element) => {
     if (element["username"] == some) {
@@ -172,6 +197,20 @@ const findSocketId = (some) => {
     }
   });
   return socketid;
+};
+
+const updateUser = (array, tuple) => {
+  if (array.length > 0) {
+    array.forEach((element) => {
+      if (element["username"] == tuple["username"]) {
+        let id = array.indexOf(element);
+        array.splice(id, 1);
+      }
+    });
+  }
+
+  array.push(tuple);
+  return array;
 };
 
 // https://chat-video-react-v1.herokuapp.com/
